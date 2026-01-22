@@ -21,9 +21,31 @@ public class DataGenerator {
         return cities[new Random().nextInt(cities.length)];
     }
 
-    public static String generateName(Faker faker) { return faker.name().lastName() + " " + faker.name().firstName(); }
+    public static String generateName(Faker faker) {
+        return faker.name().lastName() + " " + faker.name().firstName();
+    }
 
-    public static String generatePhone(Faker faker) { return faker.phoneNumber().phoneNumber(); }
+    public static String generatePhone(Faker faker) {
+        return faker.phoneNumber().phoneNumber();
+    }
+
+    public static String generateWrongPhone(String locale) {
+        Faker faker = new Faker(new Locale(locale));
+
+        // Случайный выбор способа генерации неверного номера
+        int randomChoice = new Random().nextInt(3);
+        switch (randomChoice) {
+            case 0:
+                // Недостаточно символов
+                return faker.regexify("\\\\d{4}");
+            case 1:
+                // Неправильные символы
+                return faker.lorem().characters(8, 15);
+
+        }
+        return locale;
+    }
+
 
     public static class Registration {
         private static Faker faker;
